@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">	
+			<h:form id="formDialog">
+				<p:messages id="msg" />
+				<p:growl id="men"/>
+					<p:panel id="panelVehiculos" header="Vehiculos">							
+						<h:panelGrid columns="2" id="panelGrid" >
+												 	<h:outputText id="msgVehNumero" value="VehNumero"/>
+						 	<p:inputText id="txtVehNumero" binding="#{vehiculosView.txtVehNumero}">
+						 		<p:ajax update="panelVehiculos,msg,panelBotones" listener="#{vehiculosView.listener_txtId}"/>
+						 	</p:inputText>	
+																		
+													<h:outputText id="msgVehCilindraje" value=" VehCilindraje"/>
+							<p:inputText id="txtVehCilindraje" disabled="true" binding="#{vehiculosView.txtVehCilindraje}"/>
+													<h:outputText id="msgVehMarca" value=" VehMarca"/>
+							<p:inputText id="txtVehMarca" disabled="true" binding="#{vehiculosView.txtVehMarca}"/>
+													<h:outputText id="msgVehModelo" value=" VehModelo"/>
+							<p:inputText id="txtVehModelo" disabled="true" binding="#{vehiculosView.txtVehModelo}"/>
+													<h:outputText id="msgVehPlaca" value=" VehPlaca"/>
+							<p:inputText id="txtVehPlaca" disabled="true" binding="#{vehiculosView.txtVehPlaca}"/>
+												
+										   </h:panelGrid>
+				</p:panel>
+	   			<p:panel id="panelBotones">
+					<div align="center">					
+						<p:commandButton id="btnSave" binding="#{vehiculosView.btnSave}" disabled="true" value="Save" action="#{vehiculosView.action_save()}" update="panelVehiculos,msg,panelBotones" />
+						<p:commandButton id="btnDelete" binding="#{vehiculosView.btnDelete}" disabled="true" value="Delete" action="#{vehiculosView.action_delete_master()}" onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}" update="panelVehiculos,msg,panelBotones" />
+						<p:commandButton id="btnClear" value="Clear" action="#{vehiculosView.action_clear()}" update="panelVehiculos,msg,panelBotones" />
+					</div>
+				</p:panel>			
+			</h:form>
+  </ui:define>
+</ui:composition>

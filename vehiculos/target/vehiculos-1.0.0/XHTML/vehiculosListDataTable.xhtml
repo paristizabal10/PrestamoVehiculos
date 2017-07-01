@@ -1,0 +1,107 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+		 
+	<ui:define name="content">		
+
+		  			<h:form id="frm">								  		
+						
+						<p:panel id="panelDataTableVehiculos" header="VehiculosData">
+							<p:growl id="men"/>				
+							<p:dataTable value="#{vehiculosView.data}" var="vehiculos"
+								paginator="true" rows="5">
+																										<p:column filterBy="#{vehiculos.vehNumero}" sortBy="#{vehiculos.vehNumero}" >
+										 <f:facet name="header">
+										<h:outputText value="vehNumero"/>
+										</f:facet>
+										 <h:outputText value="#{vehiculos.vehNumero}"/>
+										 </p:column>
+			                    																									
+										<p:column filterBy="#{vehiculos.vehCilindraje}" sortBy="#{vehiculos.vehCilindraje}" >
+										 <f:facet name="header">
+										<h:outputText value="VehCilindraje"/>
+										</f:facet>
+										 <h:outputText value="#{vehiculos.vehCilindraje}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{vehiculos.vehMarca}" sortBy="#{vehiculos.vehMarca}" >
+										 <f:facet name="header">
+										<h:outputText value="VehMarca"/>
+										</f:facet>
+										 <h:outputText value="#{vehiculos.vehMarca}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{vehiculos.vehModelo}" sortBy="#{vehiculos.vehModelo}" >
+										 <f:facet name="header">
+										<h:outputText value="VehModelo"/>
+										</f:facet>
+										 <h:outputText value="#{vehiculos.vehModelo}"/>
+										</p:column>   
+			                    									
+										<p:column filterBy="#{vehiculos.vehPlaca}" sortBy="#{vehiculos.vehPlaca}" >
+										 <f:facet name="header">
+										<h:outputText value="VehPlaca"/>
+										</f:facet>
+										 <h:outputText value="#{vehiculos.vehPlaca}"/>
+										</p:column>   
+			                    			                    
+								<p:column headerText="Options">
+									<p:commandButton id="btnEdit" icon="ui-icon-pencil"
+										update=":dialogVehiculos"
+										actionListener="#{vehiculosView.action_edit}">
+										<f:attribute name="selectedVehiculos" value="#{vehiculos}" />
+									</p:commandButton>
+									<p:commandButton id="btnDelete"									
+										title="Delete" actionListener="#{vehiculosView.action_delete_datatable}"
+										onclick="if(!confirm('Do you really want to delete this Entry?')){return false;}"
+										icon="ui-icon-trash" update="@form">
+										<f:attribute name="selectedVehiculos" value="#{vehiculos}" />
+									</p:commandButton>
+								</p:column>									                    
+							</p:dataTable>	
+						</p:panel>
+						<p:panel id="panelBoton">
+							<div align="center">
+								<p:commandButton id="btnNew" value="New"
+									action="#{vehiculosView.action_new()}" update=":dialogVehiculos" />
+							</div>
+						</p:panel>						
+		   			</h:form>
+					<p:dialog id="dialogVehiculos" appendTo="@(body)" draggable="true"
+						closable="false" visible="#{vehiculosView.showDialog}" resizable="false"
+						modal="true" width="500">
+						<h:form id="formDialog">
+							<p:messages id="msg" />
+							<p:panel id="panelVehiculos" header="Vehiculos">							
+							    <h:panelGrid columns="2" id="panelGrid" >
+																		 <h:outputText id="msgVehNumero" value="VehNumero"/>
+									 <p:inputText id="txtVehNumero" binding="#{vehiculosView.txtVehNumero}">
+									 <p:ajax update=":dialogVehiculos" listener="#{vehiculosView.listener_txtId}"/>
+									 </p:inputText>	
+																											
+																		<h:outputText id="msgVehCilindraje" value=" VehCilindraje"/>
+									<p:inputText id="txtVehCilindraje" disabled="true" binding="#{vehiculosView.txtVehCilindraje}"/>
+																		<h:outputText id="msgVehMarca" value=" VehMarca"/>
+									<p:inputText id="txtVehMarca" disabled="true" binding="#{vehiculosView.txtVehMarca}"/>
+																		<h:outputText id="msgVehModelo" value=" VehModelo"/>
+									<p:inputText id="txtVehModelo" disabled="true" binding="#{vehiculosView.txtVehModelo}"/>
+																		<h:outputText id="msgVehPlaca" value=" VehPlaca"/>
+									<p:inputText id="txtVehPlaca" disabled="true" binding="#{vehiculosView.txtVehPlaca}"/>
+																		
+																    </h:panelGrid>
+							</p:panel>						   
+							<p:panel id="panelBotones">
+								<div align="center">					
+									<p:commandButton id="btnSave" binding="#{vehiculosView.btnSave}" value="Save" action="#{vehiculosView.action_save()}" update=":dialogVehiculos :frm:panelDataTableVehiculos" />
+									<p:commandButton id="btnClear" value="Clear" action="#{vehiculosView.action_clear()}" update=":dialogVehiculos" />
+									<p:commandButton id="btnExit" value="Exit" action="#{vehiculosView.action_closeDialog()}" update=":dialogVehiculos" />
+								</div>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+
